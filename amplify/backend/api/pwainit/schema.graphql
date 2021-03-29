@@ -1,0 +1,20 @@
+type Blog @model {
+  id: String!
+  name: String!
+  posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
+}
+
+type Post @model @key(name: "byBlog", fields: ["blogID"]) {
+  id: String!
+  title: String!
+  blogID: String!
+  blog: Blog @connection(fields: ["blogID"])
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+}
+
+type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
+  id: String!
+  postID: String!
+  post: Post @connection(fields: ["postID"])
+  content: String!
+}
