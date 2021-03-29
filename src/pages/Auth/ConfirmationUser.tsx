@@ -16,7 +16,7 @@ const ConfirmationUser = () => {
   async function confirmUser(data: FormValues) {
     const { username, code } = data;
     try {
-      const { user } = await Auth.confirmSignUp(username, code);
+      await Auth.confirmSignUp(username, code);
       setUserConfirmed(true);
       reset({
         username: "",

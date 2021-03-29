@@ -59,6 +59,7 @@ const SignIn = () => {
             control={control}
             render={({ onChange, onBlur, value }) => (
               <input
+                type="Password"
                 onBlur={onBlur}
                 onChange={(value) => onChange(value)}
                 value={value}
