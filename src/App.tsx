@@ -81,7 +81,7 @@ function App() {
     <UserStatusContext.Provider value={user}>
       <Router>
         <Header signOut={signOut} />
-        {user && <p>{user}</p>}
+        {user !== "no user authenticated" && <p>{user}</p>}
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/list" component={List} />
