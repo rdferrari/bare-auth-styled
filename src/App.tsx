@@ -6,6 +6,9 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./components/GlobalStyles";
+import { lightTheme, darkTheme } from "./components/Themes";
 
 // Components
 import Header from "./components/Header";
@@ -27,6 +30,7 @@ export const UserStatusContext = createContext("");
 
 function App() {
   const [user, setUser] = useState<string>("no user authenticated");
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     getUserData();
@@ -77,35 +81,42 @@ function App() {
     }
   }
 
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
+
   return (
-    <UserStatusContext.Provider value={user}>
-      <Router>
-        <Header signOut={signOut} />
-        {user !== "no user authenticated" && <p>{user}</p>}
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/list" component={List} />
+    <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      <UserStatusContext.Provider value={user}>
+        <Router>
+          <GlobalStyles />
+          <Header signOut={signOut} />
+          <button onClick={themeToggler}>Switch Theme</button>
+          {user !== "no user authenticated" && <p>{user}</p>}
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/list" component={List} />
 
-          <Route path="/detail/:id" component={Detail} />
+            <Route path="/detail/:id" component={Detail} />
 
-          {user === "no user authenticated" ? (
-            <>
-              <Route path="/sign-in" component={SignIn} />
-              <Route path="/sign-up" component={SignUp} />
-              <Route path="/user-confirmation" component={ConfirmationUser} />
-            </>
-          ) : (
-            <>
-              <Route path="/sign-in" render={() => <Redirect to="/list" />} />
-              <Route path="/sign-up" render={() => <Redirect to="/list" />} />
-              <Route
-                path="/user-confirmation"
-                render={() => <Redirect to="/list" />}
-              />
-            </>
-          )}
+            {user === "no user authenticated" ? (
+              <>
+                <Route path="/sign-in" component={SignIn} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/user-confirmation" component={ConfirmationUser} />
+              </>
+            ) : (
+              <>
+                <Route path="/sign-in" render={() => <Redirect to="/list" />} />
+                <Route path="/sign-up" render={() => <Redirect to="/list" />} />
+                <Route
+                  path="/user-confirmation"
+                  render={() => <Redirect to="/list" />}
+                />
+              </>
+            )}
 
-          {/* {user ? (
+            {/* {user ? (
             <Route
               path="/user-confirmation"
               render={() => <Redirect to="/list" />}
@@ -114,14 +125,15 @@ function App() {
             <Route path="/user-confirmation" component={ConfirmationUser} />
           )} */}
 
-          {/* {user ? (
+            {/* {user ? (
             <Route path="/sign-up" render={() => <Redirect to="/list" />} />
           ) : (
             <Route path="/sign-up" component={SignUp} />
           )} */}
-        </Switch>
-      </Router>
-    </UserStatusContext.Provider>
+          </Switch>
+        </Router>
+      </UserStatusContext.Provider>
+    </ThemeProvider>
   );
 }
 
