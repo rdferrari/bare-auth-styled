@@ -1,12 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserStatusContext } from "../App";
+import styled from "styled-components";
+import LinkStyled from "./LinkStyled";
 
 interface Props {
   signOut(): void;
+  themeToggler(): void;
+  theme: string;
 }
 
-function Header({ signOut }: Props): JSX.Element {
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const HeaderLeft = styled.div`
+  display: flex;
+`;
+
+const HeaderRight = styled.div`
+  display: flex;
+`;
+
+const LinkHeader = styled.p`
+  color: ${({ theme }) => theme.text};
+  margin: 10px;
+`;
+
+function Header({ signOut, themeToggler, theme }: Props): JSX.Element {
   const [installPromptEvent, setInstallPromptEvent] = useState<any>();
 
   useEffect(() => {
@@ -34,37 +56,42 @@ function Header({ signOut }: Props): JSX.Element {
     });
   };
 
-  console.log(installPromptEvent);
-
   return (
     <UserStatusContext.Consumer>
       {(user) => (
-        <div>
-          <Link to="/">
-            <p>Home</p>
-          </Link>
-
-          <Link to="/list">
-            <p>List</p>
-          </Link>
-
-          <Link to="/profiles">
-            <p>Profiles</p>
-          </Link>
-
-          {installPromptEvent && (
-            <button onClick={handleInstallPwa}>Install</button>
-          )}
-
-          {console.log(user)}
-          {user === "no user authenticated" ? (
-            <Link to="/sign-in">
-              <p>Sign in</p>
+        <HeaderContainer>
+          <HeaderLeft>
+            <Link to="/">
+              <LinkStyled content="Home" />
             </Link>
-          ) : (
-            <p onClick={signOut}>Sign out</p>
-          )}
-        </div>
+            <LinkHeader onClick={themeToggler}>
+              {theme === "light" ? "Dark mode" : "Light mode"}
+            </LinkHeader>
+          </HeaderLeft>
+
+          <HeaderRight>
+            {/* <Link to="/list">
+              <LinkStyled>List</LinkStyled>
+            </Link>
+
+            <Link to="/profiles">
+              <LinkStyled>Profiles</LinkStyled>
+            </Link> */}
+
+            {installPromptEvent && (
+              <LinkHeader onClick={handleInstallPwa}>Install</LinkHeader>
+            )}
+
+            {console.log(user)}
+            {user === "no user authenticated" ? (
+              <Link to="/sign-in">
+                <LinkStyled content="Sign in" />
+              </Link>
+            ) : (
+              <LinkHeader onClick={signOut}>Sign out</LinkHeader>
+            )}
+          </HeaderRight>
+        </HeaderContainer>
       )}
     </UserStatusContext.Consumer>
   );

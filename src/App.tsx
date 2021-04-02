@@ -87,11 +87,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      {console.log(theme)}
       <UserStatusContext.Provider value={user}>
         <Router>
           <GlobalStyles />
-          <Header signOut={signOut} />
-          <button onClick={themeToggler}>Switch Theme</button>
+          <Header signOut={signOut} themeToggler={themeToggler} theme={theme} />
+
           {user !== "no user authenticated" && <p>{user}</p>}
           <Switch>
             <Route exact path="/" component={Home} />
@@ -115,21 +116,6 @@ function App() {
                 />
               </>
             )}
-
-            {/* {user ? (
-            <Route
-              path="/user-confirmation"
-              render={() => <Redirect to="/list" />}
-            />
-          ) : (
-            <Route path="/user-confirmation" component={ConfirmationUser} />
-          )} */}
-
-            {/* {user ? (
-            <Route path="/sign-up" render={() => <Redirect to="/list" />} />
-          ) : (
-            <Route path="/sign-up" component={SignUp} />
-          )} */}
           </Switch>
         </Router>
       </UserStatusContext.Provider>

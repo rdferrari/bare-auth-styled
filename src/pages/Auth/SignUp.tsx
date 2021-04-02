@@ -2,6 +2,42 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useForm, Controller } from "react-hook-form";
 import { Redirect, Link } from "react-router-dom";
+import styled from "styled-components";
+import Tagline from "../../components/TagLine";
+import LinkStyled from "../../components/LinkStyled";
+
+const AuthContainer = styled.div`
+  margin: 0;
+  width 100%;
+
+  @media only screen and (min-width: 1024px) {
+    margin: 0 auto;
+    padding: 200px 0;
+    width 900px;
+  }
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media only screen and (min-width: 1024px) {
+    flex-direction: row;
+  }
+`;
+
+const RightContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (min-width: 1024px) {
+    margin-top: 40px;
+  }
+`;
 
 type FormValues = {
   username: string;
@@ -38,11 +74,11 @@ const SignUp = () => {
   if (userNotConfirmed) return <Redirect to="/user-confirmation" />;
 
   return (
-    <div>
-      <div>
-        <p>Sign up</p>
-        <div>
-          <p>*Username</p>
+    <AuthContainer>
+      <ContentContainer>
+        <Tagline />
+
+        <RightContainer>
           <Controller
             control={control}
             render={({ onChange, onBlur, value }) => (
@@ -59,7 +95,6 @@ const SignUp = () => {
           />
           {errors.username && <p>Username is required.</p>}
 
-          <p>*Email</p>
           <Controller
             control={control}
             render={({ onChange, onBlur, value }) => (
@@ -76,7 +111,6 @@ const SignUp = () => {
           />
           {errors.email && <p>Email is required.</p>}
 
-          <p>*Password</p>
           <Controller
             control={control}
             render={({ onChange, onBlur, value }) => (
@@ -99,11 +133,11 @@ const SignUp = () => {
           </button>
 
           <Link to="/sign-in">
-            <p>Sign in</p>
+            <LinkStyled content="Sign in" />
           </Link>
-        </div>
-      </div>
-    </div>
+        </RightContainer>
+      </ContentContainer>
+    </AuthContainer>
   );
 };
 
