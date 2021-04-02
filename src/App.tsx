@@ -15,6 +15,7 @@ import Header from "./components/Header";
 
 // Pages
 import Home from "./pages/Home";
+import AuthPage from "./pages/Auth/AuthPage";
 import SignIn from "./pages/Auth/SignIn";
 import ConfirmationUser from "./pages/Auth/ConfirmationUser";
 import SignUp from "./pages/Auth/SignUp";
@@ -88,26 +89,26 @@ function App() {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       {console.log(theme)}
+      {console.log(user)}
       <UserStatusContext.Provider value={user}>
         <Router>
           <GlobalStyles />
           <Header signOut={signOut} themeToggler={themeToggler} theme={theme} />
-
-          {user !== "no user authenticated" && <p>{user}</p>}
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/list" component={List} />
-
             <Route path="/detail/:id" component={Detail} />
 
             {user === "no user authenticated" ? (
               <>
+                <Route path="/auth" component={AuthPage} />
                 <Route path="/sign-in" component={SignIn} />
                 <Route path="/sign-up" component={SignUp} />
                 <Route path="/user-confirmation" component={ConfirmationUser} />
               </>
             ) : (
               <>
+                <Route path="/auth" render={() => <Redirect to="/" />} />
                 <Route path="/sign-in" render={() => <Redirect to="/list" />} />
                 <Route path="/sign-up" render={() => <Redirect to="/list" />} />
                 <Route

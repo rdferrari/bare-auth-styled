@@ -11,15 +11,26 @@ const TagContainer = styled.div`
   }
 `;
 
+const LinkA = styled.a`
+  color: #ff00eb;
+  cursor: pointer;
+`;
+
 const Tagline = () => {
   return (
     <TagContainer>
-      <h1>Bare Auth Styled</h1>
+      <h1>Dark Auth</h1>
       <p>
-        This is an AWS Amplify + PWA React TypeScript custom authentication
-        boilerplate to start new App projects.
+        This is an AWS Amplify + PWA React TypeScript + Dark or Light style +
+        custom AWS Cognito authentication. Explore the{" "}
+        <LinkA
+          className="button-text"
+          href="https://github.com/rdferrari/bare-auth-styled"
+          target="blank"
+        >
+          {"< repo :) />"}
+        </LinkA>{" "}
       </p>
-      <p>Developed and designed by Rod</p>
     </TagContainer>
   );
 };

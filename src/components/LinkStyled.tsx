@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const LinkStyle = styled.p`
   color: ${({ theme }) => theme.text};
+  cursor: pointer;
   margin: 10px;
 `;
 

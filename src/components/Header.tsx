@@ -25,6 +25,7 @@ const HeaderRight = styled.div`
 
 const LinkHeader = styled.p`
   color: ${({ theme }) => theme.text};
+  cursor: pointer;
   margin: 10px;
 `;
 
@@ -84,7 +85,7 @@ function Header({ signOut, themeToggler, theme }: Props): JSX.Element {
 
             {console.log(user)}
             {user === "no user authenticated" ? (
-              <Link to="/sign-in">
+              <Link to="/auth">
                 <LinkStyled content="Sign in" />
               </Link>
             ) : (

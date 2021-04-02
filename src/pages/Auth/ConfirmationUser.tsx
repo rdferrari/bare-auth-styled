@@ -50,7 +50,6 @@ const ConfirmationUser = () => {
           <p>Code resend</p>
 
           <div>
-            <p>*Username</p>
             <Controller
               control={control}
               render={({ onChange, onBlur, value }) => (

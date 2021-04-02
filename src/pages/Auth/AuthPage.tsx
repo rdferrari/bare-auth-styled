@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Auth } from "aws-amplify";
-import { useForm, Controller } from "react-hook-form";
 import { Redirect, Link } from "react-router-dom";
 import styled from "styled-components";
 import Tagline from "../../components/TagLine";
-import LinkStyled from "../../components/LinkStyled";
+
 import SignInC from "../../components/SignIn";
+import SignUpC from "../../components/SignUp";
 
 const AuthContainer = styled.div`
   margin: 0;
@@ -28,35 +27,22 @@ const ContentContainer = styled.div`
   }
 `;
 
-const RightContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media only screen and (min-width: 1024px) {
-    margin-top: 40px;
-  }
-`;
-
-type FormValues = {
-  username: string;
-  password: string;
-};
-
-const SignIn = () => {
-  const { control, handleSubmit, errors, reset } = useForm();
+const AuthPage = () => {
+  const [signup, setSignup] = useState(false);
 
   return (
     <AuthContainer>
       <ContentContainer>
-        <Tagline />
-
-        <SignInC />
+        <div>
+          <Tagline />
+          <p className="button-text" onClick={() => setSignup(!signup)}>
+            {signup === false ? "< Sign up />" : "< Sign in />"}
+          </p>
+        </div>
+        {signup === false ? <SignInC /> : <SignUpC />}
       </ContentContainer>
     </AuthContainer>
   );
 };
 
-export default SignIn;
+export default AuthPage;
