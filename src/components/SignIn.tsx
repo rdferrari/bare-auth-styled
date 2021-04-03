@@ -17,15 +17,27 @@ const FormContainer = styled.div`
   }
 `;
 
-type FormValues = {
+interface FormValues {
   username: string;
   password: string;
-};
+}
+
+interface Username {
+  username: string;
+}
+
+interface NewPass {
+  username: string;
+  code: string;
+  new_password: string;
+}
 
 const SignIn = () => {
   const { control, handleSubmit, errors, reset } = useForm();
   const [userNotConfirmed, setUserNotConfirmed] = useState("");
   const [errMessage, setErrMessage] = useState("");
+  const [passForgot, setPassForgot] = useState(false);
+  const [showNewPass, setShowNewPass] = useState(false);
 
   async function signIn(data: FormValues) {
     const { username, password } = data;
@@ -65,6 +77,116 @@ const SignIn = () => {
     } catch (err) {
       console.log({ err, data });
     }
+  }
+
+  async function forgotPass(data: Username) {
+    const { username } = data;
+    try {
+      await Auth.forgotPassword(username);
+      setShowNewPass(true);
+      console.log("code resent successfully");
+    } catch (err) {
+      console.log("error resending code: ", err);
+    }
+  }
+
+  async function newPass(data: NewPass) {
+    const { username, code, new_password } = data;
+    try {
+      await Auth.forgotPasswordSubmit(username, code, new_password);
+      console.log("code resent successfully");
+      setPassForgot(false);
+      setShowNewPass(false);
+    } catch (err) {
+      console.log("error resending code: ", err);
+    }
+  }
+
+  if (showNewPass === true) {
+    return (
+      <FormContainer>
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <input
+              onBlur={onBlur}
+              onChange={(value) => onChange(value)}
+              value={value}
+              placeholder="Username"
+            />
+          )}
+          name="username"
+          rules={{ required: true }}
+          defaultValue=""
+        />
+        {errors.code && <p className="error-message">Username is required</p>}
+
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <input
+              onBlur={onBlur}
+              onChange={(value) => onChange(value)}
+              value={value}
+              placeholder="Code"
+            />
+          )}
+          name="code"
+          rules={{ required: true }}
+          defaultValue=""
+        />
+        {errors.code && <p className="error-message">Code is required</p>}
+
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <input
+              type="Password"
+              onBlur={onBlur}
+              onChange={(value) => onChange(value)}
+              value={value}
+              placeholder="New Password"
+            />
+          )}
+          name="new_password"
+          rules={{ required: true }}
+          defaultValue=""
+        />
+        {errors.code && (
+          <p className="error-message">New Password is required</p>
+        )}
+
+        <button onClick={handleSubmit(newPass)}>
+          <p>New password</p>
+        </button>
+      </FormContainer>
+    );
+  }
+
+  if (passForgot === true) {
+    return (
+      <FormContainer>
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <input
+              onBlur={onBlur}
+              onChange={(value) => onChange(value)}
+              value={value}
+              placeholder="Username"
+            />
+          )}
+          name="username"
+          rules={{ required: true }}
+          defaultValue=""
+        />
+        {errors.code && <p className="error-message">Email is required</p>}
+
+        <button onClick={handleSubmit(forgotPass)}>
+          <p>Recovery password</p>
+        </button>
+      </FormContainer>
+    );
   }
 
   if (errMessage === "User is not confirmed.") {
@@ -138,7 +260,9 @@ const SignIn = () => {
 
       {errMessage && <p className="error-message">{errMessage}</p>}
       <div>
-        <p className="button-text">{"< Forgotten password? />"}</p>
+        <p onClick={() => setPassForgot(true)} className="button-text">
+          {"< Forgotten password? />"}
+        </p>
       </div>
     </FormContainer>
   );

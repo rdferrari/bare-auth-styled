@@ -81,7 +81,7 @@ const SignUp = () => {
           Thank you, {userUsername} for signin up in Dark Auth. We sent a
           verification code to your email.
         </p>
-        {errors.code && <p className="error-message">Code is required</p>}
+
         <Controller
           control={control}
           render={({ onChange, onBlur, value }) => (
@@ -96,6 +96,7 @@ const SignUp = () => {
           rules={{ required: true }}
           defaultValue=""
         />
+        {errors.code && <p className="error-message">Code is required</p>}
 
         <button onClick={handleSubmit(confirmUser)}>
           <p>Confirm your account</p>

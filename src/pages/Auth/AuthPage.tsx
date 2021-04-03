@@ -7,13 +7,13 @@ import SignInC from "../../components/SignIn";
 import SignUpC from "../../components/SignUp";
 
 const AuthContainer = styled.div`
-  margin: 0;
+  margin: 50px 0;
   width 100%;
 
   @media only screen and (min-width: 1024px) {
     margin: 0 auto;
     padding: 200px 0;
-    width 900px;
+    width 700px;
   }
 `;
 
@@ -35,12 +35,12 @@ const AuthPage = () => {
       <ContentContainer>
         <div>
           <Tagline />
-          <p className="button-text" onClick={() => setSignup(!signup)}>
-            {signup === false ? "< Sign up />" : "< Sign in />"}
-          </p>
         </div>
         {signup === false ? <SignInC /> : <SignUpC />}
       </ContentContainer>
+      <p className="button-text" onClick={() => setSignup(!signup)}>
+        {signup === false ? "< Sign up />" : "< Sign in />"}
+      </p>
     </AuthContainer>
   );
 };
