@@ -32,14 +32,19 @@ const AuthPage = () => {
   return (
     <AuthContainer>
       <ContentContainer>
+        <Tagline />
         <div>
-          <Tagline />
+          <p>
+            {signup === false
+              ? "If you do not have an account"
+              : "If you have an account"}
+          </p>
+          <p className="button-text" onClick={() => setSignup(!signup)}>
+            {signup === false ? "< Sign up />" : "< Sign in />"}
+          </p>
+          {signup === false ? <SignInC /> : <SignUpC />}
         </div>
-        {signup === false ? <SignInC /> : <SignUpC />}
       </ContentContainer>
-      <p className="button-text" onClick={() => setSignup(!signup)}>
-        {signup === false ? "< Sign up />" : "< Sign in />"}
-      </p>
     </AuthContainer>
   );
 };
