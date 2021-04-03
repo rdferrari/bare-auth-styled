@@ -17,6 +17,15 @@ const HomeContainer = styled.div`
   }
 `;
 
+const ButtonContainer = styled.div`
+  margin-top: 30px;
+  text-align: center;
+
+  @media only screen and (min-width: 1024px) {
+    text-align: left;
+  }
+`;
+
 function Home(): JSX.Element {
   return (
     <UserStatusContext.Consumer>
@@ -27,11 +36,13 @@ function Home(): JSX.Element {
           {user !== "no user authenticated" ? (
             <p>Hello {user}</p>
           ) : (
-            <Link to="/auth">
-              <button>
-                <p>Sign in</p>
-              </button>
-            </Link>
+            <ButtonContainer>
+              <Link to="/auth">
+                <button>
+                  <p>Sign in</p>
+                </button>
+              </Link>
+            </ButtonContainer>
           )}
         </HomeContainer>
       )}

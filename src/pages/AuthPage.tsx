@@ -26,24 +26,35 @@ const ContentContainer = styled.div`
   }
 `;
 
+const AuthToggle = styled.div`
+  text-align: center;
+
+  @media only screen and (min-width: 1024px) {
+    text-align: left;
+  }
+`;
+
 const AuthPage = () => {
   const [signup, setSignup] = useState(false);
 
   return (
     <AuthContainer>
       <ContentContainer>
-        <Tagline />
         <div>
-          <p>
-            {signup === false
-              ? "If you do not have an account"
-              : "If you have an account"}
-          </p>
-          <p className="button-text" onClick={() => setSignup(!signup)}>
-            {signup === false ? "< Sign up />" : "< Sign in />"}
-          </p>
-          {signup === false ? <SignInC /> : <SignUpC />}
+          <Tagline />
+          <AuthToggle>
+            <p>
+              {signup === false
+                ? "If you do not have an account"
+                : "If you have an account"}
+            </p>
+            <p className="button-text" onClick={() => setSignup(!signup)}>
+              {signup === false ? "< Sign up />" : "< Sign in />"}
+            </p>
+          </AuthToggle>
         </div>
+
+        {signup === false ? <SignInC /> : <SignUpC />}
       </ContentContainer>
     </AuthContainer>
   );
