@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Redirect, Link } from "react-router-dom";
 import styled from "styled-components";
-import Tagline from "../../components/TagLine";
+import Tagline from "../components/TagLine";
 
-import SignInC from "../../components/SignIn";
-import SignUpC from "../../components/SignUp";
+import SignInC from "../components/SignIn";
+import SignUpC from "../components/SignUp";
 
 const AuthContainer = styled.div`
   margin: 50px 0;

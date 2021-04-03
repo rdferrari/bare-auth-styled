@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useForm, Controller } from "react-hook-form";
-import { Redirect, Link } from "react-router-dom";
 import styled from "styled-components";
-import LinkStyled from "./LinkStyled";
 
 const FormContainer = styled.div`
   margin-top: 20px;

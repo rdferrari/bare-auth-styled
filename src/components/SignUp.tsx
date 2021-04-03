@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useForm, Controller } from "react-hook-form";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 const RightContainer = styled.div`

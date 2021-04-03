@@ -15,12 +15,7 @@ import Header from "./components/Header";
 
 // Pages
 import Home from "./pages/Home";
-import AuthPage from "./pages/Auth/AuthPage";
-import SignIn from "./pages/Auth/SignIn";
-import ConfirmationUser from "./pages/Auth/ConfirmationUser";
-import SignUp from "./pages/Auth/SignUp";
-import List from "./pages/List";
-import Detail from "./pages/Detail";
+import AuthPage from "./pages/AuthPage";
 
 // AWS Amplify config
 import config from "./aws-exports";
@@ -96,25 +91,14 @@ function App() {
           <Header signOut={signOut} themeToggler={themeToggler} theme={theme} />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/list" component={List} />
-            <Route path="/detail/:id" component={Detail} />
 
             {user === "no user authenticated" ? (
               <>
                 <Route path="/auth" component={AuthPage} />
-                <Route path="/sign-in" component={SignIn} />
-                <Route path="/sign-up" component={SignUp} />
-                <Route path="/user-confirmation" component={ConfirmationUser} />
               </>
             ) : (
               <>
                 <Route path="/auth" render={() => <Redirect to="/" />} />
-                <Route path="/sign-in" render={() => <Redirect to="/list" />} />
-                <Route path="/sign-up" render={() => <Redirect to="/list" />} />
-                <Route
-                  path="/user-confirmation"
-                  render={() => <Redirect to="/list" />}
-                />
               </>
             )}
           </Switch>

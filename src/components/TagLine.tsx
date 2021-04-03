@@ -13,10 +13,10 @@ const TagContainer = styled.div`
   }
 `;
 
-const LinkA = styled.a`
-  color: #ff00eb;
-  cursor: pointer;
-`;
+// const LinkA = styled.a`
+//   color: #ff00eb;
+//   cursor: pointer;
+// `;
 
 const Tagline = () => {
   return (
